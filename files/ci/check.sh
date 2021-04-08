@@ -24,7 +24,7 @@ while read FILE; do
     COMMIT=$(git log --pretty=format:"%H" -1 "$FILE");
     echo "Проверка изменений в файле $FILE на опечатки... ";
 
-    cat "$FILE" | sed 's/https\?:[^ ]*//g' | sed "s/[(][^)]*\.md[)]//g" | sed "s/[(]files[^)]*[)]//g" | hunspell -d dictionary,russian-aot-utf8,ru_RU,de_DE-utf8,en_US-utf8 > /tmp/hunspell.out
+    cat "$FILE" | sed 's/https\?:[^ ]*//g' | sed "s/[(][^)]*\.md[)]//g" | sed "s/[(]files[^)]*[)]//g" | hunspell -d dictionary,russian-aot-utf8,ru_RU-utf8,de_DE-utf8,en_US-utf8 > /tmp/hunspell.out
     cat /tmp/hunspell.out | hunspell_parser > /tmp/hunspell_parsed.json
     /tmp/check_spell -file "$FILE" -commit=$COMMIT -pr-liner /tmp/pr_liner.json -hunspell-parsed-file /tmp/hunspell_parsed.json >> /tmp/comments.json
 
